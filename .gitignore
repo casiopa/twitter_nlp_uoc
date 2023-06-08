@@ -1,6 +1,12 @@
 # Created by https://www.toptal.com/developers/gitignore/api/pycharm,python,linux,jupyternotebooks
 # Edit at https://www.toptal.com/developers/gitignore?templates=pycharm,python,linux,jupyternotebooks
 
+### casiopa
+data/
+.idea/
+idea/
+
+
 ### JupyterNotebooks ###
 # gitignore template for Jupyter Notebooks
 # website: http://jupyter.org/
@@ -300,7 +306,7 @@ cython_debug/
 #  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
-.idea/
+#.idea/
 
 ### Python Patch ###
 # Poetry local configuration file - https://python-poetry.org/docs/configuration/#local-configuration
