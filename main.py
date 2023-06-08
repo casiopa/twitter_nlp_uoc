@@ -4,14 +4,14 @@ import pandas as pd
 import json
 from utils import DATA_PATH, INPUT_FILE, PROCESSED_FILE, MENU, \
                   stop_between_steps, preprocess_data, create_bows_vocab, join_dicts_bows, paint_2word_clouds, \
-                  paint_2bars
+                  paint_2bars, create_cluster_bow
 
 
 if __name__ == '__main__':
 
     print(MENU)
-    # option = int(input('Select 0, 1, 2, 3 ó 4: '))
-    option = 3
+    option = int(input('Select 0, 1, 2, 3 ó 4: '))
+    # option = 3
     while option not in range(5):
         option = int(input(f'{option} is not a valid option. Please, select 0-4: '))
 
@@ -77,7 +77,16 @@ if __name__ == '__main__':
 
         # EXERCISE 7
         print('INFO EX 7: Data Analysis - Conclusions')
-        print(f'Answer EX 7.1: The processed dataset has {df_processed.sentiment.nunique()} clusters')
+        postive_bow = create_cluster_bow(df_processed, 4)
+        negative_bow = create_cluster_bow(df_processed, 0)
+        intersection_words = set(postive_bow.index).intersection(set(negative_bow.index))
+        print(f'\ta. The most frequent positive words are: {list(postive_bow.index)[:10]}')
+        print(f'\tb. The most frequent negative words are: {list(negative_bow.index)[:10]}')
+        print(f"""\tc. There are {len(intersection_words)} words in both positive and negative tweets.
+        For example: {list(intersection_words)[:10]}""")
+        print(f"""\td. We can see very positive words in the WordCloud por cluster 4, like: good, fun, nice.
+        And we can also see negative words for for cluster 0, like: sad, hate, sorry, need.
+        I think tokens need more preprocess but we can see the positive-negative tendency of the clusters.\n""")
 
 
 print('End execution PEC 4 - Ana Blanco - Twitter NLP')
