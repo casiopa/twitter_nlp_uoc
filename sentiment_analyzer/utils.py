@@ -23,7 +23,6 @@ STOPWORDS = ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you',
 
 # FUNCTIONS
 
-
 def preprocess_text(txt: str) -> str:
     """
     Clean text removing urls and non ASCII characters, and lowercase it.
@@ -59,25 +58,23 @@ def remove_stopwords(txt: str, stopwords: list[str] = STOPWORDS) -> str:
     return ' '.join([word for word in txt.split(' ') if word not in stopwords])
 
 
-def preprocess_data(data):
+def preprocess_data(data: list[dict]) -> list[dict]:
     """
-    Clean and remove stopwords from texts in key 'text' in a list of dicts
-    :param data:
-    :return:
+    Clean and remove stopwords from texts in value of key 'text' in a list of dicts
+    :param data: list of dictionaries, keys: words, values: count
+    :return: list of dictionaries
     """
-
     for d in data:
-        cleaned_text = remove_stopwords(preprocess_text(d['text'])).strip()
-        d['text'] = cleaned_text
+        d['text'] = remove_stopwords(preprocess_text(d['text'])).strip()
 
     return data
 
 
-def create_bows_vocab(data):
+def create_bows_vocab(data: list[dict]) -> (list[dict], list):
     """
-
-    :param data:
-    :return:
+    Create 2 elements a BoW for texts in dictionaries and a vocabulary
+    :param data: list of dictionaries with texts under key 'text'
+    :return: a list of dictionary with a BagOfWords for each text and a list with vacabulary
     """
     bows = []
     vocab = set()
@@ -87,17 +84,17 @@ def create_bows_vocab(data):
         words = d['text'].split(' ')
         bows.append(dict(Counter(words)))
         vocab = vocab.union(set(words))
-        # print(counter, words)
+        print(counter, words)
         counter += 1
     return bows, sorted(list(vocab))
 
 
 def join_dicts_bows(dicts, bows):
     """
-
-    :param dicts:
-    :param bows:
-    :return:
+    Insert a new variable BagOfWords into a dataset
+    :param dicts: list of dicts of elements with a text key
+    :param bows: list of dictionaries. Each dictionary is a BoW from the text
+    :return: pd.DataFrame with records from list of dicts and new variable bows
     """
     df = pd.DataFrame.from_dict(dicts)
     df['bow'] = bows
@@ -109,7 +106,7 @@ def create_cluster_bow(df, cluster):
 
     :param df: dataframe with text and sentiment columns
     :param cluster: category for sentiment column
-    :return: pandas series with a Bag of Words from all texts in df's text column
+    :return: pd.Series with a Bag of Words from all texts in df's text column
     """
 
     union_text = [" ".join(txt for txt in df[df.sentiment == cluster].text)][0]
@@ -119,6 +116,11 @@ def create_cluster_bow(df, cluster):
 
 
 def paint_2word_clouds(df):
+    """
+
+    :param df:
+    :return:
+    """
     clusters = df.sentiment.unique()
     wordclouds = []
     for cluster in clusters:
