@@ -87,11 +87,11 @@ if __name__ == '__main__':
 
         # EXERCISE 7
         print('INFO EX 7: Data Analysis - Starting Conclusions')
-        postive_bow = create_cluster_bow(df_processed, 4)
+        positive_bow = create_cluster_bow(df_processed, 4)
         negative_bow = create_cluster_bow(df_processed, 0)
-        intersection_words = set(postive_bow.index).intersection(set(negative_bow.index))
+        intersection_words = set(positive_bow.index).intersection(set(negative_bow.index))
         print(f"""
-        \ta.  The most frequent positive words are: {list(postive_bow.index)[:10]}'
+        \ta.  The most frequent positive words are: {list(positive_bow.index)[:10]}'
         \tb.  The most frequent negative words are: {list(negative_bow.index)[:10]}')
         \tc.  There are {len(intersection_words)} words in both positive and negative tweets.
         \t\tFor example: {list(intersection_words)[:10]}
