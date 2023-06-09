@@ -42,6 +42,9 @@ def preprocess_text(txt: str) -> str:
     valid_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ[\\] s\t\n\r\x0b\x0c'
     cleaned_text = re.sub(f"[^{valid_chars}]+", "", cleaned_text)
 
+    # remove tokens of 1 word character
+    cleaned_text = re.sub(r'\b[\w{1}]\b', ' ', cleaned_text).strip()
+
     # remove more than one space
     cleaned_text = re.sub(r"[\n\r\t\s]+", " ", cleaned_text)
 
