@@ -2,9 +2,9 @@ import sys
 import os
 import pandas as pd
 import json
-from utils import DATA_PATH, INPUT_FILE, PROCESSED_FILE, MENU, \
-                  stop_between_steps, preprocess_data, create_bows_vocab, join_dicts_bows, paint_2word_clouds, \
-                  paint_2bars, create_cluster_bow
+from sentiment_analyzer import DATA_PATH, INPUT_FILE, PROCESSED_FILE, MENU, stop_between_steps
+from sentiment_analyzer import preprocess_data, create_bows_vocab, join_dicts_bows,\
+                                     paint_2word_clouds, paint_2bars, create_cluster_bow
 
 
 if __name__ == '__main__':
