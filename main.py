@@ -32,7 +32,8 @@ if __name__ == '__main__':
 
         # EXERCISE 2
         print('INFO EX 2: Load data - Starting cleaning data')
-        clean_dicts_tweets = preprocess_data(dicts_tweets[:100] + dicts_tweets[-100:])
+        #clean_dicts_tweets = preprocess_data(dicts_tweets[:10000] + dicts_tweets[-10000:])
+        clean_dicts_tweets = preprocess_data(dicts_tweets)
         print(f"Last 5 dicts (of {len(clean_dicts_tweets)}): {json.dumps(clean_dicts_tweets[-5:], indent=2)}\n")
 
         # Stop between steps if chosen by user
@@ -67,7 +68,8 @@ if __name__ == '__main__':
         exercise = 5
         print('INFO EX 5: Data Analysis - Starting Word clouds')
         df_processed = pd.read_csv(os.path.join(DATA_PATH, PROCESSED_FILE))
-        n_nulls = df_processed[df_processed.text == ''].shape[0]
+        n_nulls = df_processed[df_processed.text.isna()].shape[0]
+        df_processed = df_processed[df_processed.text.notna()]
         print(f"""
         \t5.1: The processed dataset has {df_processed.sentiment.nunique()} clusters
         \t5.2: There are {n_nulls}, {n_nulls / df_processed.shape[0]:.2%} tweets without text variable
@@ -91,12 +93,12 @@ if __name__ == '__main__':
         negative_bow = create_cluster_bow(df_processed, 0)
         intersection_words = set(positive_bow.index).intersection(set(negative_bow.index))
         print(f"""
-        \ta.  The most frequent positive words are: {list(positive_bow.index)[:10]}'
-        \tb.  The most frequent negative words are: {list(negative_bow.index)[:10]}')
+        \ta.  The most frequent positive words are: {list(positive_bow.index)[:10]}
+        \tb.  The most frequent negative words are: {list(negative_bow.index)[:10]})
         \tc.  There are {len(intersection_words)} words in both positive and negative tweets.
         \t\tFor example: {list(intersection_words)[:10]}
-        \td.  We can see very positive words in the WordCloud por cluster 4, like: good, fun, nice.
-        \t\tAnd we can also see negative words for for cluster 0, like: sad, hate, sorry, need.
+        \td.  We can see very positive words in the WordCloud por cluster 4, like: good, love, thanks, lol.
+        \t\tAnd we can also see negative words for for cluster 0, like: work, today, back, still, last.
         \t\tApparently, tokens need more preprocesing but we can see the positive-negative tendency of the clusters.
         \n""")
 
