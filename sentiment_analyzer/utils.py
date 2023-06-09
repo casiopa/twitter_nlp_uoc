@@ -7,23 +7,7 @@ import matplotlib.pyplot as plt
 
 # VARIABLES
 
-exercise = 1
-DATA_PATH = 'data'
-INPUT_FILE = 'twitter_reduced.csv'
-PROCESSED_FILE = 'twitter_processed.csv'
 PLOT_COLORS = ['red', 'green']
-
-MENU = """
-Start execution PEC 4 - Ana Blanco - Twitter NLP
-
-Select one option
------------------
-[1] Run all PEC
-[2] Run PEC step by step
-[3] Run PEC starting on Data Analysis (Ej 5)
-[4] Run PEC starting on Data Analysis (Ej 5) step by step
-[0] Exit
-"""
 
 STOPWORDS = ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', 'your', 'yours', 'yourself',
              'yourselves', 'he', 'him', 'his', 'himself', 'she', 'her', 'hers', 'herself', 'it', 'its', 'itself',
@@ -38,12 +22,6 @@ STOPWORDS = ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you',
 
 
 # FUNCTIONS
-
-def stop_between_steps(opt, step):
-    step += 1
-    if opt in [2, 4]:
-        input(f'Press any key to continue the EX {step}: ')
-    return step
 
 
 def preprocess_text(txt: str) -> str:
