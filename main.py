@@ -70,11 +70,9 @@ if __name__ == '__main__':
         df_processed = pd.read_csv(os.path.join(DATA_PATH, PROCESSED_FILE))
         n_nulls = df_processed[df_processed.text.isna()].shape[0]
         df_processed = df_processed[df_processed.text.notna()]
-        print(f"""
-        \t5.1: The processed dataset has {df_processed.sentiment.nunique()} clusters
-        \t5.2: There are {n_nulls}, {n_nulls / df_processed.shape[0]:.2%} tweets without text variable
-        \t5.3: Printing word clouds in pop-up
-        \n""")
+        print(f"""\t\t5.1: The processed dataset has {df_processed.sentiment.nunique()} clusters
+        5.2: There are {n_nulls}, {n_nulls / df_processed.shape[0]:.2%} tweets without text variable
+        5.3: Printing word clouds in pop-up""")
         paint_2word_clouds(df_processed)
 
         # Stop between steps if chosen by user
@@ -92,15 +90,14 @@ if __name__ == '__main__':
         positive_bow = create_cluster_bow(df_processed, 4)
         negative_bow = create_cluster_bow(df_processed, 0)
         intersection_words = set(positive_bow.index).intersection(set(negative_bow.index))
-        print(f"""
-        \ta.  The most frequent positive words are: {list(positive_bow.index)[:10]}
-        \tb.  The most frequent negative words are: {list(negative_bow.index)[:10]})
-        \tc.  There are {len(intersection_words)} words in both positive and negative tweets.
-        \t\tFor example: {list(intersection_words)[:10]}
-        \td.  We can see very positive words in the WordCloud por cluster 4, like: good, love, thanks, lol.
-        \t\tAnd we can also see negative words for for cluster 0, like: work, today, back, still, last.
-        \t\tApparently, tokens need more preprocesing but we can see the positive-negative tendency of the clusters.
-        \n""")
+        print(f"""\t\ta.  The most frequent positive words are: {list(positive_bow.index)[:10]}
+        b.  The most frequent negative words are: {list(negative_bow.index)[:10]})
+        c.  There are {len(intersection_words)} words in both positive and negative tweets.
+        \tFor example: {list(intersection_words)[:10]}
+        d.  We can see very positive words in the WordCloud por cluster 4, like: good, love, thanks, lol.
+        \tAnd we can also see negative words for for cluster 0, like: work, today, back, still, last.
+        \tApparently, tokens need more preprocesing but we can see the positive-negative tendency of the clusters.
+        """)
 
 
 print('End execution PEC 4 - Ana Blanco - Twitter NLP')
