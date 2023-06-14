@@ -21,7 +21,13 @@ Select one option
 
 # FUNCTIONS
 
-def stop_between_steps(opt, step):
+def stop_between_steps(opt: int, step: int) -> int:
+    """
+
+    :param opt:
+    :param step:
+    :return:
+    """
     step += 1
     if opt in [2, 4]:
         input(f'Press any key to continue the EX {step}: ')

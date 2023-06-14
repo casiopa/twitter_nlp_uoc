@@ -12,16 +12,18 @@ import time
 
 PLOT_COLORS = ['red', 'green']
 
-STOPWORDS = ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', 'your', 'yours', 'yourself',
-             'yourselves', 'he', 'him', 'his', 'himself', 'she', 'her', 'hers', 'herself', 'it', 'its', 'itself',
-             'they', 'them', 'their', 'theirs', 'themselves', 'what', 'which', 'who', 'whom', 'this', 'that', 'these',
-             'those', 'am', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'having', 'do',
-             'does', 'did', 'doing', 'a', 'an', 'the', 'and', 'but', 'if', 'or', 'because', 'as', 'until', 'while',
-             'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between', 'into', 'through', 'during', 'before',
-             'after', 'above', 'below', 'to', 'from', 'up', 'down', 'in', 'out', 'on', 'off', 'over', 'under', 'again',
-             'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why', 'how', 'all', 'any', 'both', 'each',
-             'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than',
-             'too', 'very', 's', 't', 'can', 'will', 'just', 'don', 'should', 'now']
+STOPWORDS = ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', 'your', 'yours',
+             'yourself', 'yourselves', 'he', 'him', 'his', 'himself', 'she', 'her', 'hers',
+             'herself', 'it', 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves',
+             'what', 'which', 'who', 'whom', 'this', 'that', 'these', 'those', 'am', 'is', 'are',
+             'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does',
+             'did', 'doing', 'a', 'an', 'the', 'and', 'but', 'if', 'or', 'because', 'as', 'until',
+             'while', 'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between', 'into',
+             'through', 'during', 'before', 'after', 'above', 'below', 'to', 'from', 'up', 'down',
+             'in', 'out', 'on', 'off', 'over', 'under', 'again', 'further', 'then', 'once', 'here',
+             'there', 'when', 'where', 'why', 'how', 'all', 'any', 'both', 'each', 'few', 'more',
+             'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so',
+             'than', 'too', 'very', 's', 't', 'can', 'will', 'just', 'don', 'should', 'now']
 
 
 # FUNCTIONS
@@ -70,14 +72,15 @@ def preprocess_data(data: list[dict]) -> list[dict]:
 def create_bows_vocab(data: list[dict]) -> (list[dict], list):
     """
     Create 2 elements a BoW for texts in dictionaries and a vocabulary
-    The number of total BoWs to process will be printed. Each quartile a print will show the time elapsed.
+    Number of total BoWs to process will be printed and
+    four intermediate prints will show time of execution elapsed.
     :param data: list of dictionaries with texts under key 'text'
     :return: a list of dictionary with a BagOfWords for each text and a list with vacabulary
     """
     bows = []
     vocab = set()
 
-    print(f"\t\tINFO: Total bows to process: {len(data)}")
+    print(f"\tINFO: Total bows to process: {len(data)}")
     start_time = time.time()
 
     for counter, d in enumerate(data, start=1):
@@ -85,11 +88,13 @@ def create_bows_vocab(data: list[dict]) -> (list[dict], list):
         bows.append(dict(Counter(words)))
         vocab = vocab.union(set(words))
         if counter % (len(data)/4) == 0:
-            print(f"\t\tINFO: Processing bow {counter:>6} - Time elapsed: {time.time()-start_time:.3f} seconds")
+            t = time.time()-start_time
+            print(f"\tINFO: Processing bow {counter:>6} - Time elapsed: {t:.3f} seconds")
 
     return bows, sorted(list(vocab))
 
 
+# noinspection PyTypeChecker
 def join_dicts_bows(dicts: list[dict], bows: list[dict]) -> pd.DataFrame:
     """
     Insert a new variable BagOfWords into a dataset
