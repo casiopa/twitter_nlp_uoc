@@ -23,10 +23,10 @@ Select one option
 
 def stop_between_steps(opt: int, step: int) -> int:
     """
-
-    :param opt:
-    :param step:
-    :return:
+    Stop the program's execution until a key is pressed by the user and return the next step number
+    :param opt: option selected by user from menu
+    :param step: the number of the last step executed
+    :return: next step number
     """
     step += 1
     if opt in [2, 4]:

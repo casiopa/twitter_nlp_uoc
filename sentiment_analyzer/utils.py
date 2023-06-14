@@ -30,11 +30,10 @@ STOPWORDS = ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you',
 
 def preprocess_text(txt: str) -> str:
     """
-    Clean text removing urls and non ASCII characters, and lowercase it.
+    Clean text removing urls and non-alphanumeric characters, and lowercase it.
     :param txt: text to be clean
     :return: cleaned text
     """
-
     # remove urls
     cleaned_text = re.sub(r'\bhttps?:[\-\w~./]*\b', '', txt)
 
@@ -51,7 +50,7 @@ def remove_stopwords(txt: str, stopwords: list[str] = STOPWORDS) -> str:
     """
     Remove words in stopword list from text
     :param txt: the text to be cleaned
-    :param stopwords: list of words to eliminate from txt
+    :param stopwords: list of tokens to remove from txt
     :return: text without stopwords
     """
     return ' '.join([word for word in txt.split(' ') if word not in stopwords])
@@ -94,11 +93,10 @@ def create_bows_vocab(data: list[dict]) -> (list[dict], list):
     return bows, sorted(list(vocab))
 
 
-# noinspection PyTypeChecker
 def join_dicts_bows(dicts: list[dict], bows: list[dict]) -> pd.DataFrame:
     """
-    Insert a new variable BagOfWords into a dataset
-    :param dicts: list of dicts that has a text key
+    Insert a new variable BagOfWords as a column in a dataset
+    :param dicts: list of dicts with a text key
     :param bows: list of dicts. Each dictionary is a BoW from the text
     :return: pd.DataFrame with records from list of dicts and new variable bows
     """
@@ -107,31 +105,32 @@ def join_dicts_bows(dicts: list[dict], bows: list[dict]) -> pd.DataFrame:
     return df
 
 
-def create_cluster_bow(df, cluster):
+def create_cluster_bow(df: pd.DataFrame, cluster: int) -> pd.Series:
     """
-
+    Create a Series with sorted Bag of Words for all texts df's column text
     :param df: dataframe with text and sentiment columns
     :param cluster: category for sentiment column
     :return: pd.Series with a Bag of Words from all texts in df's text column
     """
-
     union_text = [" ".join(txt for txt in df[df.sentiment == cluster].text)][0]
     words = union_text.split(" ")
     bow = pd.Series(Counter(words)).sort_values(ascending=False)
     return bow
 
 
-def paint_2word_clouds(df, stopwords=set(STOPWORDS)):
+def paint_2word_clouds(df: pd.DataFrame, stopwords: list[str] = STOPWORDS) -> None:
     """
-
-    :param df:
-    :param stopwords:
+    Paint one image with a wordcloud per each cluster.
+    The function paints one graph in a pop-up and save a png image in images subfolder
+    :param df: DataFrame with sentiment (cluster) and text columns
+    :param stopwords: list of tokens to remove from wordclud
+    :return: None
     """
     clusters = df.sentiment.unique()
     wordclouds = []
     for cluster in clusters:
         txt = " ".join(text for text in df[df.sentiment == cluster].text)
-        wordclouds.append(WordCloud(stopwords=stopwords).generate(txt))
+        wordclouds.append(WordCloud(stopwords=set(stopwords)).generate(txt))
 
     fig, axes = plt.subplots(nrows=2, ncols=1)
 
@@ -144,7 +143,15 @@ def paint_2word_clouds(df, stopwords=set(STOPWORDS)):
     plt.show()
 
 
-def paint_2bars(df: pd.DataFrame, max_tokens: int = 25, colors: list = PLOT_COLORS) -> None:
+def paint_2bars(df: pd.DataFrame, max_tokens: int = 20, colors: list = PLOT_COLORS) -> None:
+    """
+    Paint one image with a bar graph of most frequent tokens per each cluster.
+    The function paints one graph in a pop-up and save a png image in images subfolder
+    :param df: dataframe with sentiment (cluster) and text columns
+    :param max_tokens: number of tokens that will be represented in the bar grapha
+    :param colors: a list with colors for each cluster
+    :return: None
+    """
     clusters = df.sentiment.unique()
     bows = []
     for cluster in clusters:
