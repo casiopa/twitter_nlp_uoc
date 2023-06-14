@@ -3,6 +3,7 @@ import re
 from collections import Counter
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
+import time
 
 
 # VARIABLES
@@ -33,17 +34,8 @@ def preprocess_text(txt: str) -> str:
     # remove urls
     cleaned_text = re.sub(r'\bhttps?:[\-\w~./]*\b', '', txt)
 
-    # replace "'" for " "
-    cleaned_text = cleaned_text.replace("'", " ")
-
-    # remove no ASCII chars
-    # cleaned_text = re.sub(r"[^\x00-\x7F]+", "", cleaned_text)
-    # valid_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~ \t\n\r\x0b\x0c'
-    valid_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ[\\] s\t\n\r\x0b\x0c'
-    cleaned_text = re.sub(f"[^{valid_chars}]+", "", cleaned_text)
-
-    # remove tokens of 1 word character
-    cleaned_text = re.sub(r'\b[\w{1}]\b', ' ', cleaned_text).strip()
+    # remove not alphanumeric chars
+    cleaned_text = re.sub(f"[^\w \t\r\n]+", "", cleaned_text)
 
     # remove more than one space
     cleaned_text = re.sub(r"[\n\r\t\s]+", " ", cleaned_text)
@@ -76,19 +68,23 @@ def preprocess_data(data: list[dict]) -> list[dict]:
 def create_bows_vocab(data: list[dict]) -> (list[dict], list):
     """
     Create 2 elements a BoW for texts in dictionaries and a vocabulary
+    The number of total BoWs to process will be printed. Each quartile a print will show the time elapsed.
     :param data: list of dictionaries with texts under key 'text'
     :return: a list of dictionary with a BagOfWords for each text and a list with vacabulary
     """
     bows = []
     vocab = set()
 
-    counter = 0
-    for d in data:
+    print(f"\t\tINFO: Total bows to process: {len(data)}")
+    start_time = time.time()
+
+    for counter, d in enumerate(data, start=1):
         words = d['text'].split(' ')
         bows.append(dict(Counter(words)))
         vocab = vocab.union(set(words))
-        print(counter, words)
-        counter += 1
+        if (counter) % (len(data)/4) == 0:
+            print(f"\t\tINFO: Processing bow {counter:>6} - Time elapsed: {time.time()-start_time:.3f} seconds")
+
     return bows, sorted(list(vocab))
 
 
@@ -118,7 +114,7 @@ def create_cluster_bow(df, cluster):
     return bow
 
 
-def paint_2word_clouds(df):
+def paint_2word_clouds(df, stopwords = STOPWORDS):
     """
 
     :param df:
@@ -128,7 +124,7 @@ def paint_2word_clouds(df):
     wordclouds = []
     for cluster in clusters:
         txt = " ".join(text for text in df[df.sentiment == cluster].text)
-        wordclouds.append(WordCloud().generate(txt))
+        wordclouds.append(WordCloud(stopwords=stopwords).generate(txt))
 
     fig, axes = plt.subplots(nrows=2, ncols=1)
 

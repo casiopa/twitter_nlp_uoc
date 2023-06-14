@@ -10,7 +10,7 @@ Start execution PEC 4 - Ana Blanco - Twitter NLP
 Select one option
 -----------------
 [1] Run all PEC
-[2] Run PEC step by step
+[2] Run all PEC step by step
 [3] Run PEC starting on Data Analysis (Ej 5)
 [4] Run PEC starting on Data Analysis (Ej 5) step by step
 [0] Exit
