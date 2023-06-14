@@ -2,7 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=pycharm,python,linux,jupyternotebooks
 
 ### casiopa
-*.csv
+twitter_processed.csv
 .idea/
 idea/
 deprecated.py
