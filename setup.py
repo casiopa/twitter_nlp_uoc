@@ -1,3 +1,5 @@
+"""Setup file for sentiment_analyzer package"""
+
 from setuptools import setup
 
 setup(

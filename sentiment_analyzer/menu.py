@@ -1,3 +1,5 @@
+"""Variables and functions for I/O tasks"""
+
 # VARIABLES
 
 DATA_PATH = 'data'
@@ -24,4 +26,3 @@ def stop_between_steps(opt, step):
     if opt in [2, 4]:
         input(f'Press any key to continue the EX {step}: ')
     return step
-

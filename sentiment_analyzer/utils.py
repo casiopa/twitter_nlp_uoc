@@ -1,3 +1,5 @@
+"""General functions of sentiment_analyzer package"""
+
 import pandas as pd
 import re
 from collections import Counter
@@ -35,7 +37,7 @@ def preprocess_text(txt: str) -> str:
     cleaned_text = re.sub(r'\bhttps?:[\-\w~./]*\b', '', txt)
 
     # remove not alphanumeric chars
-    cleaned_text = re.sub(f"[^\w \t\r\n]+", "", cleaned_text)
+    cleaned_text = re.sub(r"[^\w \t\r\n]+", "", cleaned_text)
 
     # remove more than one space
     cleaned_text = re.sub(r"[\n\r\t\s]+", " ", cleaned_text)
@@ -82,17 +84,17 @@ def create_bows_vocab(data: list[dict]) -> (list[dict], list):
         words = d['text'].split(' ')
         bows.append(dict(Counter(words)))
         vocab = vocab.union(set(words))
-        if (counter) % (len(data)/4) == 0:
+        if counter % (len(data)/4) == 0:
             print(f"\t\tINFO: Processing bow {counter:>6} - Time elapsed: {time.time()-start_time:.3f} seconds")
 
     return bows, sorted(list(vocab))
 
 
-def join_dicts_bows(dicts, bows):
+def join_dicts_bows(dicts: list[dict], bows: list[dict]) -> pd.DataFrame:
     """
     Insert a new variable BagOfWords into a dataset
-    :param dicts: list of dicts of elements with a text key
-    :param bows: list of dictionaries. Each dictionary is a BoW from the text
+    :param dicts: list of dicts that has a text key
+    :param bows: list of dicts. Each dictionary is a BoW from the text
     :return: pd.DataFrame with records from list of dicts and new variable bows
     """
     df = pd.DataFrame.from_dict(dicts)
@@ -114,11 +116,11 @@ def create_cluster_bow(df, cluster):
     return bow
 
 
-def paint_2word_clouds(df, stopwords = STOPWORDS):
+def paint_2word_clouds(df, stopwords=set(STOPWORDS)):
     """
 
     :param df:
-    :return:
+    :param stopwords:
     """
     clusters = df.sentiment.unique()
     wordclouds = []
