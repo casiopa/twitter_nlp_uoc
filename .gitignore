@@ -5,6 +5,7 @@
 *.csv
 .idea/
 idea/
+reports/
 deprecated.py
 
 
