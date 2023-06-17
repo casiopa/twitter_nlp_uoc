@@ -1,4 +1,4 @@
-"""Main script of the proyect"""
+"""Main script of the project"""
 
 import sys
 import os
@@ -9,7 +9,7 @@ import sentiment_analyzer as sa
 if __name__ == '__main__':
 
     print(sa.MENU)
-    option = int(input('Select 0, 1, 2, 3 ó 4: '))
+    option = int(input('Select 0, 1, 2, 3 or 4: '))
 
     while option not in range(5):
         option = int(input(f'{option} is not a valid option. Please, select 0-4: '))
@@ -19,6 +19,10 @@ if __name__ == '__main__':
 
     # PART 1: Load Data - Begin execution from INPUT_FILE
     if option in [1, 2]:
+
+        if not sa.file_exists(sa.INPUT_FILE):
+            sys.exit(f"""Abort PEC's PART 1 execution because there is not {sa.INPUT_FILE}.
+Please copy {sa.INPUT_FILE} inside {sa.DATA_PATH} folder.""")
 
         # EXERCISE 1
         EXERCISE = 1
@@ -32,7 +36,7 @@ if __name__ == '__main__':
         # EXERCISE 2
         print('EXERCISE 2: Load data - Starting cleaning data')
         clean_dicts_tweets = sa.preprocess_data(dicts_tweets[:1000] + dicts_tweets[-1000:])
-        # clean_dicts_tweets = preprocess_data(dicts_tweets)
+        # clean_dicts_tweets = sa.preprocess_data(dicts_tweets)
         print(f"""\tINFO: Data cleaned
         First 5 dicts (of {len(clean_dicts_tweets)}): {clean_dicts_tweets[:5]}
         Last 5 dicts (of {len(clean_dicts_tweets)}): {clean_dicts_tweets[-5:]}\n""")
@@ -65,6 +69,11 @@ if __name__ == '__main__':
     # PART 2: Data Analysis - Begin execution from PROCESSED_FILE
     if option in range(1, 5):
 
+        if not sa.file_exists(sa.PROCESSED_FILE):
+            sys.exit(f"""Abort PEC's PART 2 execution because there is not {sa.PROCESSED_FILE}.
+Please run PEC's with options 1 or 2 to generate it or download it from repository: 
+https://github.com/casiopa/twitter_nlp_uoc/tree/main/data.""")
+
         # EXERCISE 5
         EXERCISE = 5
         # print('EXERCISE 5: Data Analysis - Word clouds')
@@ -83,7 +92,7 @@ if __name__ == '__main__':
         # EXERCISE 6
         print("""EXERCISE 6: Data Analysis - BoWs Bars
         Printing bar graph in pop-up\n""")
-        sa.paint_2bars(df_processed, max_tokens=25)
+        sa.paint_2bars(df_processed)
 
         # Stop between steps if chosen by user
         EXERCISE = sa.stop_between_steps(option, EXERCISE)

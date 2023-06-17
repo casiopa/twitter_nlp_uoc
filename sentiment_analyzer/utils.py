@@ -1,5 +1,6 @@
 """General functions of sentiment_analyzer package"""
 
+import os
 import pandas as pd
 import re
 from collections import Counter
@@ -43,7 +44,7 @@ def preprocess_text(txt: str) -> str:
     # remove more than one space
     cleaned_text = re.sub(r"[\n\r\t\s]+", " ", cleaned_text)
 
-    return cleaned_text.lower()
+    return cleaned_text.strip().lower()
 
 
 def remove_stopwords(txt: str, stopwords: list[str] = STOPWORDS) -> str:
@@ -53,7 +54,7 @@ def remove_stopwords(txt: str, stopwords: list[str] = STOPWORDS) -> str:
     :param stopwords: list of tokens to remove from txt
     :return: text without stopwords
     """
-    return ' '.join([word for word in txt.split(' ') if word not in stopwords])
+    return ' '.join([word.strip() for word in txt.split(' ') if word not in stopwords])
 
 
 def preprocess_data(data: list[dict]) -> list[dict]:
@@ -63,18 +64,17 @@ def preprocess_data(data: list[dict]) -> list[dict]:
     :return: list of dictionaries
     """
     for d in data:
-        d['text'] = remove_stopwords(preprocess_text(d['text'])).strip()
-
+        d['text'] = remove_stopwords(preprocess_text(d['text'].strip())).strip()
     return data
 
 
 def create_bows_vocab(data: list[dict]) -> (list[dict], list):
     """
-    Create 2 elements a BoW for texts in dictionaries and a vocabulary
-    Number of total BoWs to process will be printed and
-    four intermediate prints will show time of execution elapsed.
+    Create BoWs for text's keys in dictionaries and a list with whole vocabulary.
+    Some informationwill be printed on consola like number of total BoWs to process and
+    execution time information.
     :param data: list of dictionaries with texts under key 'text'
-    :return: a list of dictionary with a BagOfWords for each text and a list with vacabulary
+    :return: a list of dictionaries with a BagOfWords for each text and a list with vacabulary
     """
     bows = []
     vocab = set()
@@ -84,6 +84,7 @@ def create_bows_vocab(data: list[dict]) -> (list[dict], list):
 
     for counter, d in enumerate(data, start=1):
         words = d['text'].split(' ')
+        words = [w for w in words if w != '']
         bows.append(dict(Counter(words)))
         vocab = vocab.union(set(words))
         if counter % (len(data)/4) == 0:
@@ -114,6 +115,7 @@ def create_cluster_bow(df: pd.DataFrame, cluster: int) -> pd.Series:
     """
     union_text = [" ".join(txt for txt in df[df.sentiment == cluster].text)][0]
     words = union_text.split(" ")
+    words = [w for w in words if w != '']
     bow = pd.Series(Counter(words)).sort_values(ascending=False)
     return bow
 
@@ -140,7 +142,10 @@ def paint_2word_clouds(df: pd.DataFrame, stopwords: list[str] = STOPWORDS) -> No
         axes[i].axis("off")
 
     fig.tight_layout(pad=2)
+    os.makedirs("images", exist_ok=True)
+    plt.savefig("images/wordclouds.jpg")
     plt.show()
+
 
 
 def paint_2bars(df: pd.DataFrame, max_tokens: int = 20, colors: list = PLOT_COLORS) -> None:
@@ -163,4 +168,7 @@ def paint_2bars(df: pd.DataFrame, max_tokens: int = 20, colors: list = PLOT_COLO
         bows[i][:max_tokens].plot(ax=axes[i], kind='bar', color=colors[i])
         axes[i].set_title(f'{max_tokens} More frequent tokens in cluster {clusters[i]}')
         axes[i].tick_params(axis='x', labelrotation=75)
+
+    os.makedirs("images", exist_ok=True)
+    plt.savefig("images/most_frequent_tokens.jpg")
     plt.show()

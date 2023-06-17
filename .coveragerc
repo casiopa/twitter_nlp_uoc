@@ -3,5 +3,3 @@ omit =
     /usr/*
     */__init__.py
     test/*
-
-
