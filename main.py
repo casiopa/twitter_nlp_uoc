@@ -35,8 +35,8 @@ Please copy {sa.INPUT_FILE} inside {sa.DATA_PATH} folder.""")
 
         # EXERCISE 2
         print('EXERCISE 2: Load data - Starting cleaning data')
-        clean_dicts_tweets = sa.preprocess_data(dicts_tweets[:1000] + dicts_tweets[-1000:])
-        # clean_dicts_tweets = sa.preprocess_data(dicts_tweets)
+        # clean_dicts_tweets = sa.preprocess_data(dicts_tweets[:1000] + dicts_tweets[-1000:])
+        clean_dicts_tweets = sa.preprocess_data(dicts_tweets)
         print(f"""\tINFO: Data cleaned
         First 5 dicts (of {len(clean_dicts_tweets)}): {clean_dicts_tweets[:5]}
         Last 5 dicts (of {len(clean_dicts_tweets)}): {clean_dicts_tweets[-5:]}\n""")
