@@ -1,6 +1,7 @@
+[![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
 # PEC 4 - Ana Blanco - *twitter_nlp_uoc*
-Repo: [casiopa/twitter_nlp_uoc](https://github.com/casiopa/twitter_nlp_uoc)  
-Private until 27-jun-2023
+Repo: [casiopa/twitter_nlp_uoc](https://github.com/casiopa/twitter_nlp_uoc). Private until 27-jun-2023
+
 ## Index
 1. [Intro](#intro)
 2. [How to run the code](#How-to-run-the-code)
@@ -9,9 +10,8 @@ Private until 27-jun-2023
 5. [Results](#results)
 
 ## Intro
-This project contains the solution to the PEC4 for `Programming for Data Science`-
-UOC University Master's Degree in Data Science.  
-[PEC4 requirements document](docs/ES-PEC4-enun.pdf)
+This project contains the solution to the PEC4 for the course `Programming for Data Science` at
+UOC University Master's Degree in Data Science. [PEC4 requirements document](docs/ES-PEC4-enun.pdf).
 
 The code of this project is splited in 3 main files:
 - `main.py` contains the execution of the project. This is the file that should be run.
@@ -31,9 +31,9 @@ The execution has two separate parts:
 The execution can start from here as long as the `data/twitter_processed.csv` exists.
 
 ### Menu
-At the start of the code excution this menu will appear to let us choose from witch part to begging
+At the start of the code excution this menu will appear to let us choose from witch part to begin
 and whether to run it step by step or at once. These are the options of the menu:
-```commandline
+```
 Select one option
 -----------------
 [1] Run all PEC
@@ -45,12 +45,39 @@ Select one option
 Select 0, 1, 2, 3 or 4:
 ```
 
-
-
 ## How to run the code
+### Option A: Download the code from repo
+This method is faster, as it includes the csv data files needed for the project.
+
+1. Clone or download repo: 
+   ```shell
+   git clone https://github.com/casiopa/twitter_nlp_uoc
+   ```
+2. Get into the folder
+   ```shell
+   cd ./twitter_nlp_uoc
+   ```
+3. You can create a new virtual enviroment and activate it:
+   ```shell
+   virtualenv venv
+   source venv/bin/activate
+   ``` 
+4. Install the required modules:
+   ```shell
+   pip install -r requirements.txt
+   ``` 
+5. Execute the code:
+   ```shell
+   python3 main.py
+   ```
+
+### Option B: Use zip file uploaded to Campus UOC
 1. Unzip file
-2. `cd ./twitter_nlp_uoc`
-3. Copy `twitter_reduced.csv` file data inside `data` folder
+2. Get into the folder
+   ```shell
+   cd ./twitter_nlp_uoc
+   ```
+3. Copy `twitter_reduced.csv` file inside `data` folder
 4. You can create a new virtual enviroment and activate it:
    ```shell
    virtualenv venv
@@ -60,16 +87,15 @@ Select 0, 1, 2, 3 or 4:
    ```shell
    pip install -r requirements.txt
    ``` 
-6. Finally execute the code:
+6. Execute the code:
    ```shell
    python3 main.py
    ```
-   
+
 NOTE: In case you get this error in the execution:
-`UserWarning: Matplotlib is currently using agg, which is a non-GUI backend,
-so cannot show the figure.`, the problem is that you are trying to display a
-plot in a GUI window but you do not have a python module for GUI display.
-In this case you can solve the problem intalling `tkinter`:
+`UserWarning: Matplotlib is currently using agg, which is a non-GUI backend, so cannot show the
+figure.`, the problem is that you are trying to display a plot in a GUI window, but you do not have
+a python module for GUI display. In this case you can solve the problem by installing `tkinter`:
 ```shell
 sudo apt-get install python3-tk
 ```
@@ -86,7 +112,7 @@ We are going to use `pylint` *linter*
     pylint *.py
     ```
 ### *linter* results  
-```commandline
+```
 Your code has been rated at 10.00/10
 ```
 
@@ -106,8 +132,8 @@ Run the following command from the root folder:
 python3 -m test.test_sentiment_analyzer
 ```
 
-These are the test results:
-```commandline
+### Test results
+```
 ok test_file_exists (__main__.TestMenu)
 ok test_stop_between_steps (__main__.TestMenu)
 ok test_create_bows_vocab (__main__.TestUtils)
@@ -140,7 +166,7 @@ ok test_remove_stop_words (__main__.TestUtils)
 
 #### Tests coverage result
 This is the tests coverage result for the package `sentiment_analyzer`:
-```commandline
+```
 Name                          Stmts   Miss  Cover
 -------------------------------------------------
 sentiment_analyzer/menu.py       14      1    93%
@@ -151,7 +177,7 @@ TOTAL                            86     27    69%
 
 ## Results
 ### Results printed to console
-```commandline
+```
 EXERCISE 1: Load data - Reading data file
         First 5 dicts (of 160000 total dicts): [{'sentiment': 0, 'id': 1467810369, 'date': 'Mon Apr 06 22:19:45 PDT 2009', 'query': 'NO_QUERY', 'user': '_TheSpecialOne_', 'text': "@switchfoot http://twitpic.com/2y1zl - Awww, that's a bummer.  You shoulda got David Carr of Third Day to do it. ;D"}, {'sentiment': 0, 'id': 1467810672, 'date': 'Mon Apr 06 22:19:49 PDT 2009', 'query': 'NO_QUERY', 'user': 'scotthamilton', 'text': "is upset that he can't update his Facebook by texting it... and might cry as a result  School today also. Blah!"}, {'sentiment': 0, 'id': 1467810917, 'date': 'Mon Apr 06 22:19:53 PDT 2009', 'query': 'NO_QUERY', 'user': 'mattycus', 'text': '@Kenichan I dived many times for the ball. Managed to save 50%  The rest go out of bounds'}, {'sentiment': 0, 'id': 1467811184, 'date': 'Mon Apr 06 22:19:57 PDT 2009', 'query': 'NO_QUERY', 'user': 'ElleCTF', 'text': 'my whole body feels itchy and like its on fire '}, {'sentiment': 0, 'id': 1467811193, 'date': 'Mon Apr 06 22:19:57 PDT 2009', 'query': 'NO_QUERY', 'user': 'Karoli', 'text': "@nationwideclass no, it's not behaving at all. i'm mad. why am i here? because I can't see you all over there. "}]
 
