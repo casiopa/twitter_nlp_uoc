@@ -18,12 +18,14 @@ The code of this project is splited in 3 main files:
 - `sentiment_analyzer/uils.py` contains the mayority of the variables and functions
 - `sentiment_analyzer/menu.py` contains auxiliary variables and functions for i/o purposes
 
-`utils.py` and `menu.py` compound the `sentiment_analyzer` package that will be imported
-with the statement `import sentiment_analyzer as sa`.
+`utils.py` and `menu.py` compose the `sentiment_analyzer` package that will be imported
+with the command `import sentiment_analyzer as sa`.
 
 The folder `test` contains unit testing for the package `sentiment_analyzer`.
 
-### Parts
+Developed with python version: 3.10.6
+
+### Execution parts
 The execution has two separate parts:
 - **Part 1**. This part starts from the beginning: Exercise 1. And it starts from the data file:
 `data/twitter_reduced.csv`
@@ -117,7 +119,7 @@ Your code has been rated at 10.00/10
 ```
 
 ## Tests
-The tests are in located in the `test` folder.  
+Tests are located in the `test` folder.  
 The code have been tested for the package `sentiment_analyzer`.
 This package contains two modules:
 - `menu.py`
@@ -165,7 +167,9 @@ ok test_remove_stop_words (__main__.TestUtils)
    [Coverage HTML report](htmlcov/index.html)
 
 #### Tests coverage result
-This is the tests coverage result for the package `sentiment_analyzer`:
+This is the tests coverage result for the package `sentiment_analyzer`. All functions from the
+package `setiment_analyzer` have been tested except for the graphical ones:
+`paint_2word_clouds` and `paint_2bars`.
 ```
 Name                          Stmts   Miss  Cover
 -------------------------------------------------
@@ -211,14 +215,10 @@ EXERCISE 7: Data Analysis - Conclusions
         a.  The most frequent positive words are: ['im', 'good', 'love', 'day', 'like', 'get', 'thanks', 'going', 'time', 'lol']
         b.  The most frequent negative words are: ['im', 'work', 'go', 'get', 'dont', 'cant', 'day', 'today', 'back', 'like'])
         c.  There are 27048 words in both positive and negative tweets.
-        	For example: ['2', 'think', 'work', 'see', 'night', 'know', 'time', 'well', 'much', 'one']
-        d.  We can see very positive words in the WordCloud por cluster 4, like: good, love, thanks, lol.
-        	And we can also see words that can't be condsidered negative for cluster 0 as: work, dont, cant, back.
-        	Apparently, tokens need more preprocesing but we can see the positive-negative tendency of the clusters.
-        
-End execution PEC 4 - Ana Blanco - Twitter NLP
-
-Process finished with exit code 0
+            For example: ['amp', 'got', 'morning', 'going', 'much', 'tomorrow', 'get', 'need', 'oh', 'like']
+        d.  We can see very positive words in the WordCloud for cluster 4, like: good, love, thanks, lol.
+            And we can also see words that could be considered negative for cluster 0 as: work, dont, cant, back.
+            As we can see, tokens need more preprocesing but we can see the positive-negative tendency of the clusters.
 ```
 
 ### Graphics

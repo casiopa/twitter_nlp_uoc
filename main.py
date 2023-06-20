@@ -35,7 +35,7 @@ Please copy {sa.INPUT_FILE} inside {sa.DATA_PATH} folder.""")
 
         # EXERCISE 2
         print('EXERCISE 2: Load data - Starting cleaning data')
-        # clean_dicts_tweets = sa.preprocess_data(dicts_tweets[:1000] + dicts_tweets[-1000:])
+        # clean_dicts_tweets = sa.preprocess_data(dicts_tweets[:1000] + dicts_tweets[-1000:]) # test
         clean_dicts_tweets = sa.preprocess_data(dicts_tweets)
         print(f"""\tINFO: Data cleaned
         First 5 dicts (of {len(clean_dicts_tweets)}): {clean_dicts_tweets[:5]}
@@ -107,10 +107,10 @@ https://github.com/casiopa/twitter_nlp_uoc/tree/main/data.""")
         a.  The most frequent positive words are: {list(POSITIVE_BOW.index)[:10]}
         b.  The most frequent negative words are: {list(NEGATIVE_BOW.index)[:10]})
         c.  There are {n_intersection_words} words in both positive and negative tweets.
-        \tFor example: {list(intersection_best)[:10]}
-        d.  We can see very positive words in the WordCloud por cluster 4, like: good, love, thanks, lol.
-        \tAnd we can also see words that can't be condsidered negative for cluster 0 as: work, dont, cant, back.
-        \tApparently, tokens need more preprocesing but we can see the positive-negative tendency of the clusters.
+            For example: {list(intersection_best)[:10]}
+        d.  We can see very positive words in the WordCloud for cluster 4, like: good, love, thanks, lol.
+            And we can also see words that could be considered negative for cluster 0 as: work, dont, cant, back.
+            As we can see, tokens need more preprocesing but we can see the positive-negative tendency of the clusters.
         """)
 
 

@@ -1,6 +1,5 @@
-pandas~=2.0.2
-matplotlib~=3.7.1
-Pillow~=9.5.0
-wordcloud~=1.9.2
-setuptools~=67.7.2
 HTMLTestRunner-rv
+pandas>=2.0.2
+setuptools>=67.7.2
+matplotlib>=3.7.1
+wordcloud>=1.9.2
