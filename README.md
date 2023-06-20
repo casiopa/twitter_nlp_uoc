@@ -102,9 +102,9 @@ a python module for GUI display. In this case you can solve the problem by insta
 sudo apt-get install python3-tk
 ```
 
-## *Linter*
-We are going to use `pylint` *linter*
-### How to run *linter*
+## Linter
+We are going to use `pylint` linter.
+### How to run linter
 1. First install `pylint` library:
     ```bash
     sudo apt install pylint
@@ -113,7 +113,7 @@ We are going to use `pylint` *linter*
     ```bash
     pylint *.py
     ```
-### *linter* results  
+### linter results  
 ```
 Your code has been rated at 10.00/10
 ```
